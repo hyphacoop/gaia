@@ -17,7 +17,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/server"
 	servertypes "github.com/cosmos/cosmos-sdk/server/types"
 	"github.com/cosmos/cosmos-sdk/store/rootmulti"
-	gaia "github.com/cosmos/gaia/v16/app"
+	gaia "github.com/cosmos/gaia/v15/app"
 	"github.com/spf13/cobra"
 
 	"github.com/cometbft/cometbft/crypto"
