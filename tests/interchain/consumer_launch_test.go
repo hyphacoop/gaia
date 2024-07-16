@@ -3,7 +3,7 @@ package interchain_test
 import (
 	"testing"
 
-	"github.com/cosmos/gaia/v18/tests/interchain/chainsuite"
+	"github.com/cosmos/gaia/v19/tests/interchain/chainsuite"
 	"github.com/stretchr/testify/suite"
 )
 

@@ -19,8 +19,12 @@ import (
 )
 
 func GetPreviousMajorMinor(ctx context.Context, testVersion string) (previousMajor string, previousMinor string, upgradeName string, err error) {
+	org, ok := os.LookupEnv("GITHUB_REPOSITORY_OWNER")
+	if !ok {
+		org = "cosmos"
+	}
 	client := github.NewClient(nil)
-	releaes, _, err := client.Repositories.ListReleases(ctx, "fastfadingviolets", "gaia", nil)
+	releaes, _, err := client.Repositories.ListReleases(ctx, org, "gaia", nil)
 	if err != nil {
 		err = fmt.Errorf("ListReleases failed: %w", err)
 		return
@@ -126,7 +130,7 @@ func main() {
 		// It needs to be versionOrBranch so it matches the docker image that was pushed
 		"test_version":     {testTag},
 		"previous_version": previous,
-		"tests":            tests,
+		"test_name":        tests,
 		"upgrade_name":     {upgradeName},
 	}
 	marshaled, err := json.Marshal(matrix)

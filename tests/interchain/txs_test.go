@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/cosmos/cosmos-sdk/x/params/client/utils"
-	"github.com/cosmos/gaia/v18/tests/interchain/chainsuite"
+	"github.com/cosmos/gaia/v19/tests/interchain/chainsuite"
 	"github.com/strangelove-ventures/interchaintest/v7"
 	"github.com/strangelove-ventures/interchaintest/v7/ibc"
 	"github.com/strangelove-ventures/interchaintest/v7/testutil"
