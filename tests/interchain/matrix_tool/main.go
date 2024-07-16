@@ -20,7 +20,7 @@ import (
 
 func GetPreviousMajorMinor(ctx context.Context, testVersion string) (previousMajor string, previousMinor string, upgradeName string, err error) {
 	client := github.NewClient(nil)
-	releaes, _, err := client.Repositories.ListReleases(ctx, "cosmos", "gaia", nil)
+	releaes, _, err := client.Repositories.ListReleases(ctx, "fastfadingviolets", "gaia", nil)
 	if err != nil {
 		err = fmt.Errorf("ListReleases failed: %w", err)
 		return

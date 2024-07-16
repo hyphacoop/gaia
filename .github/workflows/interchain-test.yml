@@ -50,7 +50,7 @@ jobs:
               uses: actions/setup-go@v5
             - name: Run test
               env:
-                TEST_DOCKER_REGISTRY: "ghcr.io/cosmos"
+                TEST_DOCKER_REGISTRY: "ghcr.io/fastfadingviolets"
                 TEST_OLD_GAIA_IMAGE_VERSION: "${{ matrix.previous_version }}"
                 TEST_NEW_GAIA_IMAGE_VERSION: "${{ matrix.test_version }}"
                 TEST_UPGRADE_NAME: "${{ matrix.upgrade_name }}"
