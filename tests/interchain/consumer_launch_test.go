@@ -96,3 +96,52 @@ func TestICS33ConsumerNoKeysChainLaunch(t *testing.T) {
 	}
 	suite.Run(t, s)
 }
+
+type MainnetConsumerChainsSuite struct {
+	*chainsuite.Suite
+}
+
+func (s *MainnetConsumerChainsSuite) TestMainnetConsumerChainsAfterUpgrade() {
+	const neutronVersion = "v3.0.2"
+	const strideVersion = "v22.0.0"
+
+	relayer, err := chainsuite.NewRelayer(s.GetContext(), s.T())
+	s.Require().NoError(err)
+	err = relayer.SetupChainKeys(s.GetContext(), s.Chain)
+	s.Require().NoError(err)
+
+	neutron, err := s.Chain.AddConsumerChain(s.GetContext(), relayer, chainsuite.ConsumerConfig{
+		ChainName:             "neutron",
+		Version:               neutronVersion,
+		ShouldCopyProviderKey: allProviderKeysCopied(),
+		Denom:                 chainsuite.NeutronDenom,
+		TopN:                  95,
+	})
+	s.Require().NoError(err)
+	stride, err := s.Chain.AddConsumerChain(s.GetContext(), relayer, chainsuite.ConsumerConfig{
+		ChainName:             "stride",
+		Version:               strideVersion,
+		ShouldCopyProviderKey: allProviderKeysCopied(),
+		Denom:                 chainsuite.StrideDenom,
+		TopN:                  95,
+	})
+	s.Require().NoError(err)
+
+	s.Require().NoError(s.Chain.CheckCCV(s.GetContext(), neutron, relayer, 1_000_000, 0, 1))
+	s.Require().NoError(s.Chain.CheckCCV(s.GetContext(), stride, relayer, 1_000_000, 0, 1))
+
+	s.UpgradeChain()
+
+	s.Require().NoError(relayer.StopRelayer(s.GetContext(), chainsuite.GetRelayerExecReporter(s.GetContext())))
+	s.Require().NoError(relayer.StartRelayer(s.GetContext(), chainsuite.GetRelayerExecReporter(s.GetContext())))
+
+	s.Require().NoError(s.Chain.CheckCCV(s.GetContext(), neutron, relayer, 1_000_000, 0, 1))
+	s.Require().NoError(s.Chain.CheckCCV(s.GetContext(), stride, relayer, 1_000_000, 0, 1))
+}
+
+func TestMainnetConsumerChainsAfterUpgrade(t *testing.T) {
+	s := &MainnetConsumerChainsSuite{
+		Suite: chainsuite.NewSuite(chainsuite.SuiteConfig{}),
+	}
+	suite.Run(t, s)
+}

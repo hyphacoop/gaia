@@ -23,6 +23,8 @@ const (
 	CommitTimeout            = 4 * time.Second
 	Uatom                    = "uatom"
 	Ucon                     = "ucon"
+	NeutronDenom             = "untn"
+	StrideDenom              = "ustr"
 	GovMinDepositAmount      = 1000
 	GovDepositAmount         = "5000000" + Uatom
 	GovDepositPeriod         = 60 * time.Second

@@ -2,6 +2,8 @@ package chainsuite
 
 import (
 	"context"
+	"os"
+	"path"
 
 	"github.com/stretchr/testify/suite"
 	"golang.org/x/mod/semver"
@@ -23,6 +25,11 @@ func NewSuite(config SuiteConfig) *Suite {
 }
 
 func (s *Suite) SetupSuite() {
+	cwd, err := os.Getwd()
+	s.Require().NoError(err)
+	err = os.Setenv("IBCTEST_CONFIGURED_CHAINS", path.Join(cwd, "configuredChains.yaml"))
+	s.Require().NoError(err)
+
 	ctx, err := NewSuiteContext(&s.Suite)
 	s.Require().NoError(err)
 	s.ctx = ctx
