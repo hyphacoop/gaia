@@ -1,0 +1,58 @@
+name: Interchain Test
+on:
+  registry_package:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+    prepare-matrix:
+        runs-on: ubuntu-latest
+        steps:
+            # We need to figure out a) a ref to clone based on a docker image, and b) which tag to test
+            # If the event is a registry_package, this comes from the pushed image; for a workflow_dispatch, it's the branch/tag that the user supplied
+            - name: Get metadata
+              id: get-metadata
+              run: |
+                if [[ "${{ github.event_name }}" == 'registry_package' ]]; then
+                  echo "ref_name=${{ github.event.registry_package.package_version.container_metadata.labels['org.opencontainers.image.revision'] }}" | tee -a $GITHUB_OUTPUT
+                  echo "tag_name=${{ github.event.registry_package.package_version.tag_name }}" | tee -a $GITHUB_OUTPUT
+                else
+                  echo "ref_name=${{ github.ref_name }}" | tee -a $GITHUB_OUTPUT
+                  echo "tag_name=${{ github.ref_name }}" | tee -a $GITHUB_OUTPUT
+                fi
+            - name: Check out repository code
+              uses: actions/checkout@v3
+              with:
+                ref: ${{ steps.get-metadata.outputs.ref_name }}
+            - name: Setup go
+              uses: actions/setup-go@v5
+            - name: Prepare matrix
+              id: generate-matrix
+              run: |
+                echo "matrix=$(go run ./tests/interchain/matrix_tool/main.go ${{ steps.get-metadata.outputs.tag_name }})" | tee -a $GITHUB_OUTPUT
+        outputs:
+            matrix: ${{ steps.generate-matrix.outputs.matrix }}
+            ref_name: ${{ steps.get-metadata.outputs.ref_name }}
+    test:
+        needs: prepare-matrix
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                ${{fromJson(needs.prepare-matrix.outputs.matrix)}}
+            fail-fast: false
+            max-parallel: 10
+        steps:
+            - name: Check out repository code
+              uses: actions/checkout@v3
+              with:
+                ref: ${{ needs.prepare-matrix.outputs.ref_name }}
+            - name: Setup go
+              uses: actions/setup-go@v5
+            - name: Run test
+              env:
+                TEST_DOCKER_REGISTRY: "ghcr.io/cosmos"
+                TEST_OLD_GAIA_IMAGE_VERSION: "${{ matrix.previous_version }}"
+                TEST_NEW_GAIA_IMAGE_VERSION: "${{ matrix.test_version }}"
+                TEST_UPGRADE_NAME: "${{ matrix.upgrade_name }}"
+              run: |
+                go test -v ./tests/interchain/... -failfast -p 1 -timeout 5h -run="^${{ matrix.test_name }}"
