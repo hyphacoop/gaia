@@ -39,15 +39,18 @@ func (s *ConsumerLaunchSuite) TestChainLaunch() {
 	s.Require().NoError(err)
 	err = s.Chain.CheckCCV(s.GetContext(), consumer, s.Relayer, 1_000_000, 0, 1)
 	s.Require().NoError(err)
+	s.Require().NoError(chainsuite.SendSimpleIBCTx(s.GetContext(), s.Chain, consumer, s.Relayer))
 
 	s.UpgradeChain()
 
 	err = s.Chain.CheckCCV(s.GetContext(), consumer, s.Relayer, 1_000_000, 0, 1)
 	s.Require().NoError(err)
+	s.Require().NoError(chainsuite.SendSimpleIBCTx(s.GetContext(), s.Chain, consumer, s.Relayer))
 	consumer2, err := s.Chain.AddConsumerChain(s.GetContext(), s.Relayer, cfg)
 	s.Require().NoError(err)
 	err = s.Chain.CheckCCV(s.GetContext(), consumer2, s.Relayer, 1_000_000, 0, 1)
 	s.Require().NoError(err)
+	s.Require().NoError(chainsuite.SendSimpleIBCTx(s.GetContext(), s.Chain, consumer2, s.Relayer))
 }
 
 func TestICS40ChainLaunch(t *testing.T) {
@@ -122,6 +125,8 @@ func (s *MainnetConsumerChainsSuite) TestMainnetConsumerChainsAfterUpgrade() {
 
 	s.Require().NoError(s.Chain.CheckCCV(s.GetContext(), neutron, s.Relayer, 1_000_000, 0, 1))
 	s.Require().NoError(s.Chain.CheckCCV(s.GetContext(), stride, s.Relayer, 1_000_000, 0, 1))
+	s.Require().NoError(chainsuite.SendSimpleIBCTx(s.GetContext(), s.Chain, neutron, s.Relayer))
+	s.Require().NoError(chainsuite.SendSimpleIBCTx(s.GetContext(), s.Chain, stride, s.Relayer))
 }
 
 func TestMainnetConsumerChainsAfterUpgrade(t *testing.T) {
