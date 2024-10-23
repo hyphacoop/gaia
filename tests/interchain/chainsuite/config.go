@@ -43,7 +43,7 @@ const (
 	DowntimeJailDuration   = 10 * time.Second
 	ProviderSlashingWindow = 10
 	GasPrices              = "0.005" + Uatom
-	ValidatorCount         = 6
+	ValidatorCount         = 1
 	UpgradeDelta           = 30
 	ValidatorFunds         = 11_000_000_000
 	ChainSpawnWait         = 155 * time.Second
@@ -103,11 +103,11 @@ func DefaultGenesisAmounts(denom string) func(i int) (types.Coin, types.Coin) {
 				Denom: denom,
 				Amount: sdkmath.NewInt([ValidatorCount]int64{
 					30_000_000,
-					29_000_000,
-					20_000_000,
-					10_000_000,
-					7_000_000,
-					4_000_000,
+					// 29_000_000,
+					// 20_000_000,
+					// 10_000_000,
+					// 7_000_000,
+					// 4_000_000,
 				}[i]),
 			}
 	}

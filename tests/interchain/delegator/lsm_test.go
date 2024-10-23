@@ -1,4 +1,4 @@
-package interchain_test
+package delegator_test
 
 import (
 	"encoding/json"

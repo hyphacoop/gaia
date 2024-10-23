@@ -20,15 +20,16 @@ type ConsumerLaunchSuite struct {
 }
 
 func noProviderKeysCopied() [chainsuite.ValidatorCount]bool {
-	return [chainsuite.ValidatorCount]bool{false, false, false, false, false, false}
+	// return [chainsuite.ValidatorCount]bool{false, false, false, false, false, false}
+	return [chainsuite.ValidatorCount]bool{false}
 }
 
 func allProviderKeysCopied() [chainsuite.ValidatorCount]bool {
-	return [chainsuite.ValidatorCount]bool{true, true, true, true, true, true}
+	return [chainsuite.ValidatorCount]bool{true}
 }
 
 func someProviderKeysCopied() [chainsuite.ValidatorCount]bool {
-	return [chainsuite.ValidatorCount]bool{true, false, true, false, true, false}
+	return [chainsuite.ValidatorCount]bool{true}
 }
 
 func (s *ConsumerLaunchSuite) TestChainLaunch() {
