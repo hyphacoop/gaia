@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/launchdarkly/go-jsonstream/v3/jwriter"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
@@ -390,6 +391,7 @@ func (a appCreator) appExport(
 	logger log.Logger,
 	db dbm.DB,
 	traceStore io.Writer,
+	genesisWriter *jwriter.Writer,
 	height int64,
 	forZeroHeight bool,
 	jailAllowedAddrs []string,
@@ -435,7 +437,7 @@ func (a appCreator) appExport(
 		}
 	}
 
-	return gaiaApp.ExportAppStateAndValidators(forZeroHeight, jailAllowedAddrs, modulesToExport)
+	return gaiaApp.ExportAppStateAndValidators(forZeroHeight, jailAllowedAddrs, modulesToExport, genesisWriter)
 }
 
 var tempDir = func() string {

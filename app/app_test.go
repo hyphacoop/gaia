@@ -46,6 +46,6 @@ func TestGaiaApp_BlockedModuleAccountAddrs(t *testing.T) {
 
 func TestGaiaApp_Export(t *testing.T) {
 	app := gaiahelpers.Setup(t)
-	_, err := app.ExportAppStateAndValidators(true, []string{}, []string{})
+	_, err := app.ExportAppStateAndValidators(true, []string{}, []string{}, nil)
 	require.NoError(t, err, "ExportAppStateAndValidators should not have an error")
 }

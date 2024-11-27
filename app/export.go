@@ -1,9 +1,8 @@
 package gaia
 
 import (
-	"encoding/json"
-
 	tmproto "github.com/cometbft/cometbft/proto/tendermint/types"
+	"github.com/launchdarkly/go-jsonstream/v3/jwriter"
 
 	storetypes "cosmossdk.io/store/types"
 
@@ -20,6 +19,7 @@ func (app *GaiaApp) ExportAppStateAndValidators(
 	forZeroHeight bool,
 	jailAllowedAddrs []string,
 	modulesToExport []string,
+	genesisWriter *jwriter.Writer,
 ) (servertypes.ExportedApp, error) {
 	// as if they could withdraw from the start of the next block
 	ctx := app.NewContextLegacy(true, tmproto.Header{Height: app.LastBlockHeight()})
@@ -32,19 +32,23 @@ func (app *GaiaApp) ExportAppStateAndValidators(
 		app.prepForZeroHeightGenesis(ctx, jailAllowedAddrs)
 	}
 
-	genState, err := app.mm.ExportGenesisForModules(ctx, app.appCodec, modulesToExport)
+	appState := genesisWriter.Object()
+	appStateWriter := (&appState).Name("app_state")
+	err := app.mm.ExportGenesisForModules(ctx, app.appCodec, modulesToExport, appStateWriter)
 	if err != nil {
 		return servertypes.ExportedApp{}, err
 	}
+	(&appState).End()
 
-	appState, err := json.MarshalIndent(genState, "", "  ")
-	if err != nil {
-		return servertypes.ExportedApp{}, err
-	}
+	// appState, err := json.MarshalIndent(genState, "", "  ")
+	// if err != nil {
+	// 	return servertypes.ExportedApp{}, err
+	// }
+	// fmt.Println(string(appState))
 
 	validators, err := staking.WriteValidators(ctx, app.StakingKeeper)
 	return servertypes.ExportedApp{
-		AppState:        appState,
+		// AppState:        appState,
 		Validators:      validators,
 		Height:          height,
 		ConsensusParams: app.BaseApp.GetConsensusParams(ctx),
