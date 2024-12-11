@@ -211,6 +211,10 @@ require (
 	github.com/syndtr/goleveldb v1.0.1-0.20220721030215-126854af5e6d // indirect
 	github.com/tendermint/go-amino v0.16.0 // indirect
 	github.com/tidwall/btree v1.7.0 // indirect
+	github.com/tidwall/gjson v1.18.0 // indirect
+	github.com/tidwall/match v1.1.1 // indirect
+	github.com/tidwall/pretty v1.2.0 // indirect
+	github.com/tidwall/sjson v1.2.5 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ulikunitz/xz v0.5.11 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb // indirect
@@ -258,7 +262,7 @@ replace (
 	github.com/99designs/keyring => github.com/cosmos/keyring v1.2.0
 
 	// Use special SDK v0.50.x release with support for both ICS and LSM
-	github.com/cosmos/cosmos-sdk => github.com/cosmos/cosmos-sdk v0.50.10-lsm
+	github.com/cosmos/cosmos-sdk => github.com/hyphacoop/cosmos-sdk v0.0.0-20241212204229-d30bc0b75b87
 
 	// TODO: remove it: https://github.com/cosmos/cosmos-sdk/issues/13134
 	github.com/dgrijalva/jwt-go => github.com/golang-jwt/jwt/v4 v4.4.2
@@ -269,3 +273,5 @@ replace (
 	// following versions might cause unexpected behavior
 	github.com/syndtr/goleveldb => github.com/syndtr/goleveldb v1.0.1-0.20210819022825-2ae1ddf74ef7
 )
+
+replace github.com/cometbft/cometbft => github.com/hyphacoop/cometbft v0.0.0-20241210164041-a9659d576537
