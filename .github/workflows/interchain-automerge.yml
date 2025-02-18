@@ -29,12 +29,17 @@ jobs:
           filters: |
             tests:
               - 'tests/interchain/**'
-        # run only if some file in 'src' folder was changed
-      - if: steps.changes.outputs.src == 'true'
+            src:
+              - '**/*'
+              - '!tests/interchain/**'
+          predicate-quantifier: 'every'
+      - if: steps.changes.outputs.tests == 'true' && steps.changes.outputs.src == 'false'
         id: automerge
-        name: automerge
+        name: automerge tests
         uses: "pascalgn/automerge-action@v0.16.4"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           MERGE_FORKS: "false"
           MERGE_METHOD: "squash"
+          MERGE_REQUIRED_APPROVALS: "0"
+          MERGE_LABELS: "automerge"
