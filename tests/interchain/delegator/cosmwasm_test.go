@@ -109,7 +109,7 @@ func (s *CosmWasmSuite) executeContractByProposal(contractAddr string) {
 		contractAddr, increment,
 		"--title", "Increment count",
 		"--summary", "Increment count",
-		"--deposit", fmt.Sprintf("1000000%s", s.Config.ChainSpec.Denom),
+		"--deposit", fmt.Sprintf("1000001%s", s.Config.ChainSpec.Denom),
 	)
 	s.Require().NoError(err)
 
