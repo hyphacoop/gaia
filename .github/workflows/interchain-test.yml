@@ -1,9 +1,13 @@
 name: Interchain Test
 on:
-  repository_dispatch:
-    types: [image-pushed]
+  # repository_dispatch:
+  #   types: [image-pushed]
   workflow_dispatch:
-
+    inputs:
+      non-governance:
+        type: boolean
+        description: Replace binaries without an upgrade proposal
+      
 jobs:
     prepare-matrix:
         runs-on: ubuntu-latest
