@@ -59,8 +59,9 @@ const (
 
 // These have to be vars so we can take their address
 var (
-	OneValidator  int = 1
-	SixValidators int = 6
+	OneValidator  int  = 1
+	SixValidators int  = 6
+	NonGovUpgrade bool = false
 )
 
 func MergeChainSpecs(spec, other *interchaintest.ChainSpec) *interchaintest.ChainSpec {
