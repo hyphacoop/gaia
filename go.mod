@@ -266,7 +266,7 @@ replace (
 	github.com/99designs/keyring => github.com/cosmos/keyring v1.2.0
 
 	// Use special SDK v0.50.x release with support for both ICS and LSM
-	github.com/cosmos/cosmos-sdk => github.com/cosmos/cosmos-sdk v0.50.11-lsm
+	github.com/cosmos/cosmos-sdk => github.com/hyphacoop/cosmos-sdk v0.0.0-20250403204031-bec547f6385d
 
 	// TODO: remove it: https://github.com/cosmos/cosmos-sdk/issues/13134
 	github.com/dgrijalva/jwt-go => github.com/golang-jwt/jwt/v4 v4.4.2
@@ -277,3 +277,11 @@ replace (
 	// following versions might cause unexpected behavior
 	github.com/syndtr/goleveldb => github.com/syndtr/goleveldb v1.0.1-0.20210819022825-2ae1ddf74ef7
 )
+
+replace cosmossdk.io/store => github.com/hyphacoop/cosmos-sdk/store v0.0.0-20250403203946-6be951df82c3
+
+replace cosmossdk.io/core => github.com/hyphacoop/cosmos-sdk/core v0.0.0-20250401145845-bac4d9f8e51a
+
+replace github.com/skip-mev/feemarket => github.com/hyphacoop/feemarket v0.0.0-20250403212510-bb48eea81764
+
+replace cosmossdk.io/collections => github.com/hyphacoop/cosmos-sdk/collections v0.0.0-20250403202739-3a968b5f3089
