@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	goRuntime "runtime"
 
 	"github.com/gorilla/mux"
 	"github.com/rakyll/statik/fs"
@@ -153,6 +154,9 @@ func NewGaiaApp(
 
 	std.RegisterLegacyAminoCodec(legacyAmino)
 	std.RegisterInterfaces(interfaceRegistry)
+
+	goRuntime.SetMutexProfileFraction(100)
+	goRuntime.SetBlockProfileRate(100000)
 
 	// App Opts
 	skipGenesisInvariants := cast.ToBool(appOpts.Get(crisis.FlagSkipGenesisInvariants))
