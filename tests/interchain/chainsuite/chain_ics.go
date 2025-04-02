@@ -136,6 +136,9 @@ func (p *Chain) AddConsumerChain(ctx context.Context, relayer *Relayer, config C
 	// 	// This will disable the genesis transform
 	// 	config.Spec.InterchainSecurityConfig.ConsumerVerOverride = providerICS
 	// }
+	if config.Spec.InterchainSecurityConfig.ProviderVerOverride == "" {
+		config.Spec.InterchainSecurityConfig.ProviderVerOverride = "v7.0.0-rc0"
+	}
 	cf := interchaintest.NewBuiltinChainFactory(
 		GetLogger(ctx),
 		[]*interchaintest.ChainSpec{config.Spec},
