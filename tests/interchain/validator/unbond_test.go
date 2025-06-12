@@ -3,7 +3,7 @@ package validator_test
 import (
 	"testing"
 
-	"github.com/strangelove-ventures/interchaintest/v8"
+	"github.com/cosmos/interchaintest/v10"
 	"github.com/stretchr/testify/suite"
 
 	"github.com/cosmos/gaia/v25/tests/interchain/chainsuite"
