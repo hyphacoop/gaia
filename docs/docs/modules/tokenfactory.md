@@ -6,7 +6,6 @@ order: 2
 The `x/tokenfactory` module used by the Hub allows any account to create a new token with the name `factory/{creator address}/{subdenom}`.
 
 Gaia uses a fork of Strangelove's implementaton of the tokenfactory module: [cosmos/tokenfactory](https://github.com/cosmos/tokenfactory). The fork introduced the following changes:
-- The Cosmos SDK dependency was bumped to v0.53.
 - The sudo mint capability was removed.
 
 You can find more details in the [module documentation](https://github.com/cosmos/tokenfactory/blob/main/x/tokenfactory/README.md).
